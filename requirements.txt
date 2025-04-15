@@ -1,0 +1,16 @@
+dotenv
+langchain
+langchain-experimental
+langchain-community
+langchain-core
+langchain-huggingface
+langchain-google-genai
+langchain-anthropic
+langchain-cohere
+langchain-chroma
+langchain-elasticsearch
+langchain-upstage
+langchain-cohere
+langchain-milvus
+langchain-text-splitters
+lagchain-teddynote
