@@ -14,3 +14,4 @@ langchain-cohere
 langchain-milvus
 langchain-text-splitters
 langchain-teddynote
+faiss-cpu

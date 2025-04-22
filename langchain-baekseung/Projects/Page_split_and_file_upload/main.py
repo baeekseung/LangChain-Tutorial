@@ -5,6 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 from langchain_teddynote.prompts import load_prompt
+import glob
 
 load_dotenv()
 
@@ -17,9 +18,13 @@ if "messages" not in st.session_state:
 with st.sidebar:
     clear_button = st.button("대화 초기화")
 
+    prompt_files = glob.glob("Prompt_temp/*.yaml")
+
     selected_prompt = st.selectbox(
     "프롬프트를 선택해 주세요.",
-    ("기본모드", "SNS 게시글", "요약"), index=0)
+    prompt_files, index=0)
+
+    task_input = st.text_input("task 입력","")
 
 
 def print_messages():
@@ -29,20 +34,13 @@ def print_messages():
 def add_message(role, message):
     st.session_state.messages.append(ChatMessage(role=role, content=message))
 
-def create_chain(prompt_type):
+def create_chain(prompt_type, task=""):
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", "당신은 친절한 AI 어시스턴트입니다. 다음의 질문에 간결하게 답변해 주세요."),
-        ("user", "{question}"),
-    ])
+    prompt = load_prompt(prompt_type, encoding="utf-8")
 
-    if prompt_type == "SNS 게시글":
-        prompt = load_prompt("Prompt_temp/sns.yaml", encoding="utf-8")
-    elif prompt_type == "요약":
-        prompt = load_prompt("Prompt_temp/summary.yaml", encoding="utf-8")
+    if task:
+        prompt = prompt.partial(task=task)
 
-
-    
     llm = ChatOpenAI(model="gpt-4o", temperature=0)
     chain = prompt | llm | StrOutputParser()
     return chain
@@ -59,7 +57,7 @@ if user_input:
     # 사용자 입력 출력
     st.chat_message("user").write(user_input)
 
-    chain = create_chain(selected_prompt)
+    chain = create_chain(selected_prompt, task=task_input)
     response = chain.stream({"question": user_input})
 
     with st.chat_message("assistant"):
