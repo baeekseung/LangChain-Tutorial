@@ -16,3 +16,4 @@ langchain-text-splitters
 langchain-teddynote
 streamlit
 pymupdf
+pydantic
