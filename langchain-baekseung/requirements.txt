@@ -14,4 +14,10 @@ langchain-cohere
 langchain-milvus
 langchain-text-splitters
 langchain-teddynote
+<<<<<<< HEAD
 streamlit
+=======
+streamlit
+pymupdf
+pydantic
+>>>>>>> 7269b5b14bd5fdb8ce393ac110c1a738e19930b9
