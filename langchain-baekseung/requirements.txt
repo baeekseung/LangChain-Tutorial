@@ -13,5 +13,5 @@ langchain-upstage
 langchain-cohere
 langchain-milvus
 langchain-text-splitters
-lagchain-teddynote
+langchain-teddynote
 streamlit
